@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gojek-engineering/go-multierror.svg?branch=master)](https://travis-ci.org/gojek-engineering/go-multierror)
+
 # multierror
 --
     import "go-multierror"
