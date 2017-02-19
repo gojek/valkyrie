@@ -1,4 +1,10 @@
 language: go
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:masterminds/glide'
+    packages:
+      - glide
 
 go:
  - master 
