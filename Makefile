@@ -1,8 +1,7 @@
 .PHONY: all
-all: build-deps build fmt vet lint test
+all: build test
 
 GLIDE_NOVENDOR=$(shell glide novendor)
-UNIT_TEST_PACKAGES=$(shell glide novendor | grep -v "featuretests")
 
 setup:
 	mkdir -p $(GOPATH)/bin
@@ -34,4 +33,4 @@ lint:
 	done
 
 test:
-	ENVIRONMENT=test go test -race $(UNIT_TEST_PACKAGES) -p=1
+	ENVIRONMENT=test go test -race $(UNIT_TEST_PACKAGES)
