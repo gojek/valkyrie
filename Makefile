@@ -4,6 +4,10 @@ all: build-deps build fmt vet lint test
 GLIDE_NOVENDOR=$(shell glide novendor)
 UNIT_TEST_PACKAGES=$(shell glide novendor | grep -v "featuretests")
 
+setup:
+	curl https://glide.sh/get | sh
+	go get -u github.com/golang/lint/golint
+
 build-deps:
 	glide install
 
