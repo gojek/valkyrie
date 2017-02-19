@@ -1,6 +1,7 @@
 package multierror
 
 import (
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,7 +9,7 @@ import (
 )
 
 func TestMultiErrorValidation(t *testing.T) {
-	me := &MultiError{}
+	me := &MultiError{mutex: new(sync.Mutex)}
 	me.Push("one")
 	me.Push("two")
 
@@ -18,7 +19,7 @@ func TestMultiErrorValidation(t *testing.T) {
 }
 
 func TestMultiErrorRespresentation(t *testing.T) {
-	me := &MultiError{}
+	me := &MultiError{mutex: new(sync.Mutex)}
 	me.Push("one")
 	me.Push("two")
 
@@ -30,7 +31,7 @@ func TestMultiErrorRespresentation(t *testing.T) {
 }
 
 func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
-	me := &MultiError{}
+	me := &MultiError{mutex: new(sync.Mutex)}
 
 	err := me.HasError()
 
@@ -38,7 +39,7 @@ func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
 }
 
 func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
-	me := &MultiError{}
+	me := &MultiError{mutex: new(sync.Mutex)}
 
 	res := me.Error()
 

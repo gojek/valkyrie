@@ -12,7 +12,7 @@ update-deps:
 
 compile:
 	mkdir -p out/
-	go build ./...
+	go build -race ./...
 
 build: build-deps compile fmt vet lint
 
@@ -29,4 +29,4 @@ lint:
 	done
 
 test:
-	ENVIRONMENT=test go test $(UNIT_TEST_PACKAGES) -p=1
+	ENVIRONMENT=test go test -race $(UNIT_TEST_PACKAGES) -p=1

@@ -3,16 +3,20 @@ package multierror
 import (
 	"errors"
 	"strings"
+	"sync"
 )
 
 // MultiError implements error interface.
 // An instance of MultiError has zero or more errors.
 type MultiError struct {
-	errs []error
+	mutex *sync.Mutex
+	errs  []error
 }
 
 // Push adds an error to MultiError.
 func (m *MultiError) Push(errString string) {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
 	m.errs = append(m.errs, errors.New(errString))
 }
 
