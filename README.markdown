@@ -17,6 +17,13 @@ type MultiError struct {
 MultiError implements error interface. An instance of MultiError has zero or
 more errors.
 
+#### func  NewMultiError
+
+```go
+func NewMultiError() *MultiError
+```
+NewMultiError: returns a thread safe instance of multierror
+
 #### func (*MultiError) Error
 
 ```go

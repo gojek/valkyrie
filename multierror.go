@@ -13,6 +13,13 @@ type MultiError struct {
 	errs  []error
 }
 
+// NewMultiError: returns a thread safe instance of multierror
+func NewMultiError() *MultiError {
+	return &MultiError{
+		mutex: &sync.Mutex{},
+	}
+}
+
 // Push adds an error to MultiError.
 func (m *MultiError) Push(errString string) {
 	m.mutex.Lock()
