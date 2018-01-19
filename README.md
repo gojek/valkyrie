@@ -7,9 +7,7 @@ Go wrapper for handling zero or more errors
 ```
 go get github.com/gojektech/valkyrie
 ```
-or,
- 
-- Add `github.com/gojektech/valkyrie` to a dependency manager, and preferably fix a version.
+or, add `github.com/gojektech/valkyrie` as dependency and preferably fix a version.
 
 ## License
 
