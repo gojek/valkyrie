@@ -1,4 +1,10 @@
-package: go-multierror
+package: valkyrie
+homepage: https://gojek.tech/valkyrie
+license: Apache-2.0
+owners:
+- name: GO-JEK Tech
+  email: tech@go-jek.com
+  homepage: https://gojek.tech
 import: []
 testImport:
 - package: github.com/stretchr/testify

@@ -1,4 +1,4 @@
-package multierror
+package valkyrie
 
 import (
 	"sync"
