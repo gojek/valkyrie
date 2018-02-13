@@ -1,4 +1,4 @@
-package: valkyrie
+package: github.com/gojektech/valkyrie
 homepage: https://gojek.tech/valkyrie
 license: Apache-2.0
 owners:
