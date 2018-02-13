@@ -1,7 +1,6 @@
 package valkyrie
 
 import (
-	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,7 +8,7 @@ import (
 )
 
 func TestMultiErrorValidation(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{}
 	me.Push("one")
 	me.Push("two")
 
@@ -19,7 +18,7 @@ func TestMultiErrorValidation(t *testing.T) {
 }
 
 func TestMultiErrorRespresentation(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{}
 	me.Push("one")
 	me.Push("two")
 
@@ -31,7 +30,7 @@ func TestMultiErrorRespresentation(t *testing.T) {
 }
 
 func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{}
 
 	err := me.HasError()
 
@@ -39,7 +38,7 @@ func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
 }
 
 func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{}
 
 	res := me.Error()
 
