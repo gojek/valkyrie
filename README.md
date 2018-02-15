@@ -1,13 +1,49 @@
 # Valkyrie
 
-## Description
-Go wrapper for handling zero or more errors
+Valkyrie is a utility that helps you aggregate multiple errors in Go, while maintaining thread safety.
 
-## Usage 
+## Installation 
 ```
-go get github.com/gojektech/valkyrie
+go get -u github.com/gojektech/valkyrie
 ```
-or, add `github.com/gojektech/valkyrie` as dependency and preferably fix a version.
+
+## Usage
+
+Consider the case of an error prone operation, where there is a possibility of encountering multiple, mutually independant errors while running an operation. We can use Valkyrie to collate all the errors into a single error which we can then return:
+
+```go
+func errorProneOperation(n int) error {
+	// Create a new Multierror instance, which implements the error interface
+	errs := new(valkyrie.MultiError)
+
+	for i := 0; i < n; i++ {
+		errs.Push(fmt.Sprintf("error in iteration %d", i))
+	}
+	// When you have to return an error, call the `HasError` method
+	// which returns nil if the length of errors is 0, and returns the errs instance itself if its not
+	return errs.HasError()
+}
+```
+
+Now, the `errorProneOperation` can be used just like a function that returns a single error:
+
+```go
+func main() {
+	err := errorProneOperation(3)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
+	// Outputs:
+	// err : error in iteration 0, error in iteration 1, error in iteration 2
+	err = errorProneOperation(0)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
+	// Does not output anything
+}
+```
+
+For more documentation, you can visit [godoc.org](https://www.godoc.org/github.com/gojektech/valkyrie).
 
 ## License
 
