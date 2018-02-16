@@ -1,5 +1,5 @@
 # Valkyrie
-
+[![Build Status](https://travis-ci.org/gojektech/valkyrie.svg?branch=master)](https://travis-ci.org/gojektech/valkyrie)
 Valkyrie is a utility that helps you aggregate multiple errors in Go, while maintaining thread safety.
 
 ## Installation 
