@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"strconv"
 )
 
 func TestMultiErrorValidation(t *testing.T) {
@@ -43,4 +44,20 @@ func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
 	res := me.Error()
 
 	assert.Empty(t, res, "expected empty multi-error representation to be empty")
+}
+
+func TestMultiErrorConcurrentPushAndError(t *testing.T) {
+	me := &MultiError{}
+
+	for i := 0; i < 1000; i++ {
+		go func(i int) {
+			me.Push(strconv.Itoa(i))
+		}(i)
+	}
+
+	for i := 0; i < 100; i++ {
+		go func() {
+			me.Error()
+		}()
+	}
 }
