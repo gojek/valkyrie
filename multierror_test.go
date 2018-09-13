@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"strconv"
+	"sync"
 )
 
 func TestMultiErrorValidation(t *testing.T) {
@@ -49,15 +50,21 @@ func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
 func TestMultiErrorConcurrentPushAndError(t *testing.T) {
 	me := &MultiError{}
 
+	var wg sync.WaitGroup
 	for i := 0; i < 1000; i++ {
+		wg.Add(1)
 		go func(i int) {
 			me.Push(strconv.Itoa(i))
+			wg.Done()
 		}(i)
 	}
 
 	for i := 0; i < 100; i++ {
+		wg.Add(1)
 		go func() {
-			me.Error()
+			_ = me.Error()
+			wg.Done()
 		}()
 	}
+	wg.Wait()
 }
