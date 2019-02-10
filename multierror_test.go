@@ -1,6 +1,7 @@
 package valkyrie
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -43,4 +44,15 @@ func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
 	res := me.Error()
 
 	assert.Empty(t, res, "expected empty multi-error representation to be empty")
+}
+
+func TestMultiErrorWhileConcurrentPushShouldNotPanic(t *testing.T) {
+	me := &MultiError{}
+	concurrentPushAndErrors := func() {
+		for i := 0; i < 100; i++ {
+			go func(errValue int) { me.Push(fmt.Sprintf("Error %d", errValue)) }(i)
+			go func() { _ = me.Error() }()
+		}
+	}
+	assert.NotPanics(t, concurrentPushAndErrors)
 }

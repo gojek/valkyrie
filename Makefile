@@ -6,7 +6,7 @@ GLIDE_NOVENDOR=$(shell glide novendor)
 setup:
 	mkdir -p $(GOPATH)/bin
 	curl https://glide.sh/get | sh
-	go get -u github.com/golang/lint/golint
+	go get -u golang.org/x/lint/golint
 
 build-deps:
 	glide install

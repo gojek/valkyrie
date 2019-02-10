@@ -33,9 +33,10 @@ func (m *MultiError) HasError() error {
 
 // Error implements error interface.
 func (m *MultiError) Error() string {
-	formattedError := make([]string, len(m.errs))
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
+
+	formattedError := make([]string, len(m.errs))
 	for i, e := range m.errs {
 		formattedError[i] = e.Error()
 	}
