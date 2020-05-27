@@ -56,3 +56,29 @@ func TestMultiErrorWhileConcurrentPushShouldNotPanic(t *testing.T) {
 	}
 	assert.NotPanics(t, concurrentPushAndErrors)
 }
+
+func TestMultiError_Cause(t *testing.T) {
+	me := &MultiError{}
+	assert.NoError(t, me.Cause())
+
+	me.Push("one")
+	me.Push("two")
+	me.Push("three")
+
+	err := me.Cause()
+	assert.Error(t, err)
+	assert.Equal(t, "one", err.Error())
+}
+
+func TestMultiError_Unwrap(t *testing.T) {
+	me := &MultiError{}
+	assert.NoError(t, me.Unwrap())
+
+	me.Push("one")
+	me.Push("two")
+	me.Push("three")
+
+	err := me.Unwrap()
+	assert.Error(t, err)
+	assert.Equal(t, "one", err.Error())
+}
