@@ -43,3 +43,20 @@ func (m *MultiError) Error() string {
 
 	return strings.Join(formattedError, ", ")
 }
+
+// Cause returns the first original error.
+func (m *MultiError) Cause() error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	if len(m.errs) == 0 {
+		return nil
+	}
+
+	return m.errs[0]
+}
+
+// Unwrap provides compatibility for go 1.13 error chains.
+func (m *MultiError) Unwrap() error {
+	return m.Cause()
+}
